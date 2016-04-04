@@ -28,9 +28,9 @@ public class Database {
 		professors.add(professor);
 	}
 	
-	public Student loginStudent(int id, String password) throws Exception {
+	public Student loginStudent(String email, String password) throws Exception {
 		for (Student student: students) {
-			if (student.getId() == id && student.getPassword().equals(password)) {
+			if (student.getEmail() == email && student.getPassword().equals(password)) {
 				return student;
 			}
 		}
