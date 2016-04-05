@@ -2,6 +2,7 @@ package Final.v2;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -28,15 +29,36 @@ public class Database {
 		professors.add(professor);
 	}
 	
+	Scanner input = new Scanner(System.in);
+	int count = 0;
+	
+		//why not try catch ?
+	//personal preference
 	public Student loginStudent(String email, String password) throws Exception {
 		for (Student student: students) {
+			do {
+				System.out.println("Enter your email: ");
+				String userEmail = input.nextLine();
+				System.out.println("Enter your password: ");
+				String userPassword = input.nextLine();
+		
 			if (student.getEmail() == email && student.getPassword().equals(password)) {
 				return student;
 			}
-		}
+			else {
+				count++;
+				if (count == 3) {
+					System.out.println("You blocked your account");
+				}
+			}
+			} while(count < 3);
+			
 		throw new Exception("Username or password incorrect!");
-	}
-	
+		
+			}
+		}
+
+
 	public void rateProfessor(Student student, Professor professor, Subject subject, int score) throws Exception {
 		if (!professor.getSubject().equals(subject)) {
 			throw new Exception("Subject not applicable for this professor");
