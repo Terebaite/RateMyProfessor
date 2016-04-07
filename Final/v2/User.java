@@ -1,11 +1,11 @@
-package Final.v2;
+package Final.RateMyProfessor.Final.v2;
 import java.io.Serializable;
 
 
 public abstract class User implements Serializable {
 	
-	public User(int id, String name, String password, String email) {
-		this.id = id;
+	public User(String name, String password, String email) {
+	
 		this.name = name;
 		this.password = password;
 		this.email = email;
@@ -15,19 +15,11 @@ public abstract class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 		
 	// TODO Add email property, getter, setter and add it to the toString serializer
-	private int id;
+
 	private String name;
 	private String password;
 	private String email;
 
-	
-	public int getId() {
-		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
 
 	public String getName() {
 		return name;

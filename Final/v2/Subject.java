@@ -1,4 +1,4 @@
-package Final.v2;
+package Final.RateMyProfessor.Final.v2;
 
 public class Subject {
 	
