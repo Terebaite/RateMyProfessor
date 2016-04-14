@@ -1,30 +1,32 @@
 package rateMyProfessor;
 
-public class Rating {
+import java.io.Serializable;
+
+public class Rating implements Serializable {
 	
-	private Student student;
-	private Professor professor;
-	private Subject subject;
+	private int studentId;
+	private int professorId;
+//	private Subject subject;
 	private int score;
 	
-	public Rating(Student student, Professor professor, int score) {
-		this.student = student;
-		this.professor = professor;
+	public Rating(int studentId, int professorId, int score) {
+		this.studentId = studentId;
+		this.professorId = professorId;
 //		this.subject = subject;
 		this.score = score;
 	}
 	
-	public Student getStudent() {
-		return student;
+	public int getStudentId() {
+		return studentId;
 	}
-	public void setStudent(Student student) {
-		this.student = student;
+	public void setStudentId(int studentId) {
+		this.studentId = studentId;
 	}
-	public Professor getProfessor() {
-		return professor;
+	public int getProfessorId() {
+		return professorId;
 	}
-	public void setProfessor(Professor professor) {
-		this.professor = professor;
+	public void setProfessorId(int professorId) {
+		this.professorId = professorId;
 	}
 //	public Subject getSubject() {
 //		return subject;

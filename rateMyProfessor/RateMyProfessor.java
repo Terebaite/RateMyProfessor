@@ -1,4 +1,5 @@
 package rateMyProfessor;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class RateMyProfessor {
@@ -6,12 +7,13 @@ public class RateMyProfessor {
 	static Database db = new Database();
     static Scanner input = new Scanner(System.in);
     static User me = null;
+    // "me" is the User that is using the application. Before they login we don't know which user is using it, therefore it is null.
 
 	public static void main(String[] args) throws Exception {
 		
 		welcome();
         // regenerateSeedData(); // Only uncomment this if you want to clear all the data you've created and start from scratch
-
+		// one time function to make sure we have a data to work with. 
 	}
 
 	private static void welcome() throws Exception {
@@ -30,10 +32,11 @@ public class RateMyProfessor {
 					if(me.getId() > 0) {
 						if (me instanceof Student) {
                             System.out.println("Welcome, student");
-                            endApplication();
+                            showStudentMenu();
 							// The user is a Student
 							// TODO
 							// Make a method that lists the actions (methods) that a student can take
+                            
 							// Create those empty methods
 						} else {
                             System.out.println("Welcome, prof");
@@ -54,6 +57,52 @@ public class RateMyProfessor {
 		}
 	}
 	
+	private static void showStudentMenu() throws Exception {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Choose from the following options:");
+		System.out.println("1. Rate a professor");
+		System.out.println("2. Exit the program");
+		int option = input.nextInt();
+		
+		switch(option) {
+		case 1: listProfessors();
+				break;
+		case 2: endApplication();
+				break;
+		default: showStudentMenu();
+				 break;
+		//default is what happens in any case that is not considered before
+		}
+		
+	}
+	
+	private static void listProfessors() throws Exception {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Choose a professor you want to rate:");
+		ArrayList<Professor> professors = db.getProfessors(); 
+		for (Professor professor : professors ) {
+			System.out.printf("%s. %s\n", professor.getId(), professor.getName());
+		}
+		int professorId = input.nextInt();
+		System.out.println("Choose from the following rating options:");
+		System.out.println("1 - bad");
+		System.out.println("2 - poor");
+		System.out.println("3 - fair");
+		System.out.println("4 - good");
+		System.out.println("5 - very good");
+		int rating = input.nextInt();
+		if (rating > 5) {
+			listProfessors();
+		}
+		else {
+			db.createRating(professorId, rating);
+			System.out.println("Thank you for rating, here is the average rating for the selected professor: ");
+			System.out.println(db.getAverage(professorId));
+			endApplication();
+		}
+		
+	}
+
 	private static void registerStudent() throws Exception {
         Scanner input = new Scanner(System.in);
 		System.out.println("Email: ");

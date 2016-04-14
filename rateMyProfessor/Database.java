@@ -70,21 +70,22 @@ public class Database {
 		professors.add(professor);
 		users.add(professor);
 	}
-
-	public void rateProfessor(Student student, Professor professor, int score) {
-		ratings.add(new Rating(student, professor, score));
-	}
 	
-	public float getAverage(Professor professor) {
+	public float getAverage(int professorId) {
 		int totalScore = 0;
 		int scoreCount = 0;
-		for (Rating rating : ratings) {
-			if(rating.getProfessor().equals(professor)) {
+		for (Rating rating : this.getRatings()) {
+			if(rating.getProfessorId() == professorId) {
 				totalScore += rating.getScore();
 				scoreCount++;
 			}
 		}
-		return (float) totalScore / scoreCount;
+		if (scoreCount > 0) {
+			return (float) totalScore / scoreCount;
+		} else {
+			return (float) 0.0;
+		}
+		
 	}
 	
 	//We will go with this if we go with the subject class
@@ -144,7 +145,12 @@ public class Database {
 	}
 
     public ArrayList<Rating> loadRatingsFromFile(String filename) throws Exception {
-        return new ArrayList<Rating>();
+    	FileInputStream file = new FileInputStream(filename);
+		ObjectInputStream ois = new ObjectInputStream(file);
+		Object ratings = ois.readObject();
+        ArrayList<Rating> ratings_list = (ArrayList<Rating>) ratings;
+		ois.close();
+		return ratings_list;
     }
 
 	// the method userLogin will return a User
@@ -164,11 +170,20 @@ public class Database {
 		
 	}
 	
-	//method that give us a new id
+	//method that gives us a new id
 	public int generateId() {
 		return getUsers().size() + 1;
 	}
 
+	
+	public void createRating(int professorId, int score) {
+		int studentId = RateMyProfessor.me.getId();
+		Rating rating = new Rating(studentId, professorId, score); 
+		ratings.add(rating); //add the newly created rating to the ratings ArrayList
+	}
+	
+	
+	
     public void saveRatingsToFile() {
         System.out.println("Saving ratings");
     }
