@@ -1,10 +1,10 @@
-package Final.v2;
+package rateMyProfessor;
 import java.io.Serializable;
 
 
 public abstract class User implements Serializable {
 	
-	public User(int id, String name, String password, String email) {
+	public User(String email, String name, String password, int id) {	
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -13,22 +13,15 @@ public abstract class User implements Serializable {
 	
 	// TODO Read chapter 17 about how to make objects serializable
 	private static final long serialVersionUID = 1L;
-		
-	// TODO Add email property, getter, setter and add it to the toString serializer
 	private int id;
 	private String name;
 	private String password;
 	private String email;
 
-	
 	public int getId() {
 		return id;
 	}
-
-	public void setId(int id) {
-		this.id = id;
-	}
-
+	
 	public String getName() {
 		return name;
 	}
@@ -55,7 +48,9 @@ public abstract class User implements Serializable {
 
 
 	//read chapter 11
-	@Override
+
+    // Converts all the attributes into a string so we can save it in a .txt file
+    @Override
 	public String toString() {
 		return new StringBuffer( " Id: ")
 				.append( this.id )
@@ -63,13 +58,8 @@ public abstract class User implements Serializable {
 				.append( this.name)
 				.append( " Password: ")
 				.append( this.password )
-				.append("Email:")
+				.append(" Email: ")
 				.append(this.email).toString();
-		
-		//adds all things together and converts it to just one string
-		
-				
-				
-	}
 
+	}
 }

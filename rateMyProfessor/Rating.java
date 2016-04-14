@@ -1,4 +1,4 @@
-package Final.v2;
+package rateMyProfessor;
 
 public class Rating {
 	
@@ -7,10 +7,10 @@ public class Rating {
 	private Subject subject;
 	private int score;
 	
-	public Rating(Student student, Professor professor, Subject subject, int score) {
+	public Rating(Student student, Professor professor, int score) {
 		this.student = student;
 		this.professor = professor;
-		this.subject = subject;
+//		this.subject = subject;
 		this.score = score;
 	}
 	
@@ -26,12 +26,12 @@ public class Rating {
 	public void setProfessor(Professor professor) {
 		this.professor = professor;
 	}
-	public Subject getSubject() {
-		return subject;
-	}
-	public void setSubject(Subject subject) {
-		this.subject = subject;
-	}
+//	public Subject getSubject() {
+//		return subject;
+//	}
+//	public void setSubject(Subject subject) {
+//		this.subject = subject;
+//	}
 	public int getScore() {
 		return score;
 	}
