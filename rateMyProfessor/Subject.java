@@ -1,4 +1,4 @@
-package Final.v2;
+package rateMyProfessor;
 
 public class Subject {
 	
