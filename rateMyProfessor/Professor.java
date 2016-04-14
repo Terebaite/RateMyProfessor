@@ -7,7 +7,7 @@ public class Professor extends User {
 	}
 
 	
-//  This is not needed, if you do it like this a professor can only have one subject
+
 //	public Subject getSubject() {
 //		return subject;
 //	}

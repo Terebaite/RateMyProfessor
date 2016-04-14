@@ -33,18 +33,11 @@ public class RateMyProfessor {
 						if (me instanceof Student) {
                             System.out.println("Welcome, student");
                             showStudentMenu();
-							// The user is a Student
-							// TODO
-							// Make a method that lists the actions (methods) that a student can take
-                            
-							// Create those empty methods
 						} else {
                             System.out.println("Welcome, prof");
-                            endApplication();
-							// The user is not a Student, therefore, it is a Professor
-							// TODO
-							// Make a method that lists the actions (methods) that a professor can take
-							// Create those empty methods
+//                            endApplication();
+                            showProfessorMenu();
+						
 						}
 					} else {
 						endApplication();
@@ -76,6 +69,31 @@ public class RateMyProfessor {
 		
 	}
 	
+	private static void showProfessorMenu() throws Exception {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Choose from the following options:");
+		System.out.println("1. See my average rating");
+		System.out.println("2. Exit the program");
+		int option = input.nextInt();
+		
+		switch(option) {
+		case 1: showProfessorAverage();
+				break;
+		case 2: endApplication();
+				break;
+		default: showProfessorMenu();
+				break;
+		}
+	}
+	
+
+	private static void showProfessorAverage() throws Exception {
+		System.out.println("Your average rating for the course is: ");
+		int professorId = me.getId();
+		System.out.println(db.getAverage(professorId));
+		endApplication();
+	}
+
 	private static void listProfessors() throws Exception {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Choose a professor you want to rate:");
