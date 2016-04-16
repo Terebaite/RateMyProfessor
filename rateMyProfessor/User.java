@@ -4,23 +4,24 @@ import java.io.Serializable;
 
 public abstract class User implements Serializable {
 	
+	// TODO Read chapter 17 about how to make objects serializable
+	private static final long serialVersionUID = 3879447800883724352L;
+	private int id;
+	private String name;
+	private String password;
+	private String email;
+	
 	public User(String email, String name, String password, int id) {	
 		this.id = id;
 		this.name = name;
 		this.password = password;
 		this.email = email;
 	}
-	
-	// TODO Read chapter 17 about how to make objects serializable
-	private static final long serialVersionUID = 1L;
-	private int id;
-	private String name;
-	private String password;
-	private String email;
 
 	public int getId() {
 		return id;
 	}
+	
 	
 	public String getName() {
 		return name;

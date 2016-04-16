@@ -11,9 +11,11 @@ public class RateMyProfessor {
 
 	public static void main(String[] args) throws Exception {
 		
+		if(db.isEmpty()) {
+			// regenerateSeedData() creates a new Database with some data
+			regenerateSeedData();
+		}
 		welcome();
-        // regenerateSeedData(); // Only uncomment this if you want to clear all the data you've created and start from scratch
-		// one time function to make sure we have a data to work with. 
 	}
 
 	private static void welcome() throws Exception {
@@ -35,9 +37,7 @@ public class RateMyProfessor {
                             showStudentMenu();
 						} else {
                             System.out.println("Welcome, prof");
-//                            endApplication();
                             showProfessorMenu();
-						
 						}
 					} else {
 						endApplication();
@@ -58,7 +58,7 @@ public class RateMyProfessor {
 		int option = input.nextInt();
 		
 		switch(option) {
-		case 1: listProfessors();
+		case 1: listSubjects();
 				break;
 		case 2: endApplication();
 				break;
@@ -89,36 +89,48 @@ public class RateMyProfessor {
 
 	private static void showProfessorAverage() throws Exception {
 		System.out.println("Your average rating for the course is: ");
-		int professorId = me.getId();
-		System.out.println(db.getAverage(professorId));
+		System.out.println(((Professor) me).getAverage());
 		endApplication();
 	}
 
-	private static void listProfessors() throws Exception {
+	private static void listProfessors(int subjectId) throws Exception {
 		Scanner input = new Scanner(System.in);
 		System.out.println("Choose a professor you want to rate:");
-		ArrayList<Professor> professors = db.getProfessors(); 
-		for (Professor professor : professors ) {
-			System.out.printf("%s. %s\n", professor.getId(), professor.getName());
+		Subject subject = db.getSubjectById(subjectId);
+		if (subject.getId() > 0) {
+			for (Professor professor : subject.getProfessors() ) {
+				System.out.printf("%s. %s\n", professor.getId(), professor.getName());
+			}
+			int professorId = input.nextInt();
+			System.out.println("Choose from the following rating options:");
+			System.out.println("1 - bad");
+			System.out.println("2 - poor");
+			System.out.println("3 - fair");
+			System.out.println("4 - good");
+			System.out.println("5 - very good");
+			int rating = input.nextInt();
+			if (rating > 5) {
+				listProfessors(subjectId);
+			}
+			else {
+				db.createRating(me.getId(), professorId, subjectId, rating);
+				System.out.println("Thank you for rating, here is the average rating for the selected professor: ");
+				Professor professor = db.getProfessorById(professorId);
+				System.out.println(professor.getAverage());
+				showStudentMenu();
+			}
 		}
-		int professorId = input.nextInt();
-		System.out.println("Choose from the following rating options:");
-		System.out.println("1 - bad");
-		System.out.println("2 - poor");
-		System.out.println("3 - fair");
-		System.out.println("4 - good");
-		System.out.println("5 - very good");
-		int rating = input.nextInt();
-		if (rating > 5) {
-			listProfessors();
+	}
+	
+	private static void listSubjects() throws Exception {
+		Scanner input = new Scanner(System.in);
+		System.out.println("Choose a subject");
+		ArrayList<Subject> subjects = db.getSubjects();
+		for (Subject subject : subjects) {
+			System.out.printf("%s. %s\n", subject.getId(), subject.getName());
 		}
-		else {
-			db.createRating(professorId, rating);
-			System.out.println("Thank you for rating, here is the average rating for the selected professor: ");
-			System.out.println(db.getAverage(professorId));
-			endApplication();
-		}
-		
+		int subjectId = input.nextInt();
+		listProfessors(subjectId);
 	}
 
 	private static void registerStudent() throws Exception {
@@ -160,8 +172,8 @@ public class RateMyProfessor {
 	}
 
 	private static void endApplication() throws Exception {
-		db.saveUsersToFile("users.dat");
-		db.saveRatingsToFile("ratings.dat");
+		db.saveUsersToFile();
+		db.saveRatingsToFile();
         System.out.println("Thank you for using RateMyProfessor.");
         input.close();
         System.exit(0);
@@ -173,7 +185,6 @@ public class RateMyProfessor {
      * DO NOT USE unless your database got corrupted or you want to start from scratch
      */
     private static void regenerateSeedData() throws Exception {
-
         System.out.println("Regenerating seed data...\n");
 
         db = new Database(true);
@@ -185,7 +196,7 @@ public class RateMyProfessor {
 
         try {
             System.out.println("Saving students...");
-            db.saveUsersToFile("users.dat");
+            db.saveUsersToFile();
             System.out.println("Students Saved\n");
         } catch (Exception e) {
             System.out.println("Error attempting to save students");
@@ -205,7 +216,7 @@ public class RateMyProfessor {
 
         try {
             System.out.println("\n\nSaving professors...");
-            db.saveUsersToFile("users.dat");
+            db.saveUsersToFile();
             System.out.println("Professors Saved\n");
         } catch (Exception e) {
             System.out.println("Error attempting to save professors");
@@ -226,6 +237,49 @@ public class RateMyProfessor {
             // Get the user name and print it
             System.out.printf("%s: %s\n", user.getId(), user.getName());
         }
-    }
+        
+        // Subjects
+        
+        db.registerSubject("EU Internet Law");
+		db.registerSubject("Introduction to programming and distributed systems");
+		db.registerSubject("Strategic and Tactical Tools for E-Business");
 
+        try {
+            System.out.println("Saving subjects...");
+            db.saveSubjectsToFile();
+            System.out.println("Subjects Saved\n");
+        } catch (Exception e) {
+            System.out.println("Error attempting to save subjects");
+            e.printStackTrace();
+        }
+
+        // Print Subjects
+        System.out.println("Registered Subjects:");
+        for (Subject subject : db.getSubjects()) {
+            System.out.println(subject.getName());
+        }
+        
+        // SubjectProfessors
+        // We know that users 4, 5, 6 are Professors and that subjects 1, 2, 3 exist
+        db.associateSubjectAndProfessor(4, 1);
+		db.associateSubjectAndProfessor(5, 2);
+		db.associateSubjectAndProfessor(6, 3);
+		db.associateSubjectAndProfessor(6, 2);
+		
+        try {
+            System.out.println("Saving subjectProfessors...");
+            db.saveSubjectProfessorsToFile();
+            System.out.println("SubjectProfessors Saved\n");
+        } catch (Exception e) {
+            System.out.println("Error attempting to save subjectProfessors");
+            e.printStackTrace();
+        }
+
+        // Print Subjects
+        System.out.println("Registered Subject and Professor associations:");
+        for (SubjectProfessor subjectProfessor : db.getSubjectProfessors()) {
+            System.out.println(subjectProfessor.getId());
+        }
+        
+    }    
 }
