@@ -4,11 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Subject implements Serializable {
-	
+
 	private static final long serialVersionUID = 3626390569555531577L;
 	private int id;
 	private String name;
-	
+
 	public Subject(int id, String name) {
 		this.id = id;
 		this.name = name;
@@ -29,7 +29,7 @@ public class Subject implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public ArrayList<Professor> getProfessors() {
 		ArrayList<Professor> professors = new ArrayList<Professor>();
 		for (SubjectProfessor subjectProfessor : RateMyProfessor.db.getSubjectProfessors()) {
@@ -39,7 +39,5 @@ public class Subject implements Serializable {
 		}
 		return professors;
 	}
-	
-	
 
 }

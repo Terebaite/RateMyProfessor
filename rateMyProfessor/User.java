@@ -1,17 +1,21 @@
 package rateMyProfessor;
+
 import java.io.Serializable;
 
+public class User implements Serializable {
 
-public abstract class User implements Serializable {
-	
 	// TODO Read chapter 17 about how to make objects serializable
 	private static final long serialVersionUID = 3879447800883724352L;
 	private int id;
 	private String name;
 	private String password;
 	private String email;
-	
-	public User(String email, String name, String password, int id) {	
+
+	public User() {
+		// Empty constructor
+	}
+
+	public User(String email, String name, String password, int id) {
 		this.id = id;
 		this.name = name;
 		this.password = password;
@@ -21,8 +25,7 @@ public abstract class User implements Serializable {
 	public int getId() {
 		return id;
 	}
-	
-	
+
 	public String getName() {
 		return name;
 	}
@@ -38,7 +41,7 @@ public abstract class User implements Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
@@ -47,20 +50,20 @@ public abstract class User implements Serializable {
 		this.email = email;
 	}
 
+	// read chapter 11
 
-	//read chapter 11
-
-    // Converts all the attributes into a string so we can save it in a .txt file
-    @Override
-	public String toString() {
-		return new StringBuffer( " Id: ")
-				.append( this.id )
-				.append( " Name: ")
-				.append( this.name)
-				.append( " Password: ")
-				.append( this.password )
-				.append(" Email: ")
-				.append(this.email).toString();
-
-	}
+	// Converts all the attributes into a string so we can save it in a .txt
+	// file
+	// @Override
+	// public String toString() {
+	// return new StringBuffer( " Id: ")
+	// .append( this.id )
+	// .append( " Name: ")
+	// .append( this.name)
+	// .append( " Password: ")
+	// .append( this.password )
+	// .append(" Email: ")
+	// .append(this.email).toString();
+	//
+	// }
 }

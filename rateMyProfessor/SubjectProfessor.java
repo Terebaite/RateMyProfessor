@@ -3,7 +3,7 @@ package rateMyProfessor;
 import java.io.Serializable;
 
 public class SubjectProfessor implements Serializable {
-	
+
 	private int id;
 	private int professorId;
 	private int subjectId;
@@ -37,22 +37,23 @@ public class SubjectProfessor implements Serializable {
 	public void setSubjectId(int subjectId) {
 		this.subjectId = subjectId;
 	}
-	
-	// runs through the ArrayList and checks if any Professor's id is the same as this.ProfessorId.
+
+	// runs through the ArrayList and checks if any Professor's id is the same
+	// as this.ProfessorId.
 	public Professor getProfessor() {
 		Professor professor = null;
 		for (Professor item : RateMyProfessor.db.getProfessors()) {
-			if(item.getId() == this.getProfessorId()) {
+			if (item.getId() == this.getProfessorId()) {
 				professor = item;
 			}
 		}
 		return professor;
 	}
-	
+
 	public Subject getSubject() {
 		Subject subject = null;
 		for (Subject item : RateMyProfessor.db.getSubjects()) {
-			if(item.getId() == this.getSubjectId()) {
+			if (item.getId() == this.getSubjectId()) {
 				subject = item;
 			}
 		}
