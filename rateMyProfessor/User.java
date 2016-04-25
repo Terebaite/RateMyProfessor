@@ -4,7 +4,6 @@ import java.io.Serializable;
 
 public class User implements Serializable {
 
-	// TODO Read chapter 17 about how to make objects serializable
 	private static final long serialVersionUID = 3879447800883724352L;
 	private int id;
 	private String name;
@@ -50,20 +49,4 @@ public class User implements Serializable {
 		this.email = email;
 	}
 
-	// read chapter 11
-
-	// Converts all the attributes into a string so we can save it in a .txt
-	// file
-	// @Override
-	// public String toString() {
-	// return new StringBuffer( " Id: ")
-	// .append( this.id )
-	// .append( " Name: ")
-	// .append( this.name)
-	// .append( " Password: ")
-	// .append( this.password )
-	// .append(" Email: ")
-	// .append(this.email).toString();
-	//
-	// }
 }

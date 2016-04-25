@@ -195,7 +195,7 @@ public class RateMyProfessor {
 
 	/**
 	 * Generates the default files for users(students, professors) and ratings
-	 * DO NOT USE unless your database got corrupted or you want to start from
+	 * We SHOULD NOT USE IT unless our database got corrupted or we want to start from
 	 * scratch
 	 */
 	private static void regenerateSeedData() throws Exception {

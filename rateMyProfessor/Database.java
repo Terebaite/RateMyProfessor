@@ -63,7 +63,6 @@ public class Database {
 		}
 	}
 
-	// check the syntax for UML
 	public boolean isEmpty() {
 		return !(this.getUsers().size() > 0 || this.getRatings().size() > 0 || this.getSubjects().size() > 0);
 	}
@@ -202,7 +201,7 @@ public class Database {
 		ObjectInputStream ois = new ObjectInputStream(file);
 		Object subjects = ois.readObject();
 		ArrayList<Subject> subjects_list = (ArrayList<Subject>) subjects; // type
-																			// casting
+																			//casting
 		ois.close();
 		return subjects_list;
 	}
